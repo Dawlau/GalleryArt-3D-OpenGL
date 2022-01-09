@@ -396,3 +396,8 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+*.sln
+GalleryArt-3D-OpenGL/GalleryArt-3D-OpenGL.vcxproj
+GalleryArt-3D-OpenGL/GalleryArt-3D-OpenGL.vcxproj.filters
+GalleryArt-3D-OpenGL/glm
