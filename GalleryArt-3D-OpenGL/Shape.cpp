@@ -2,6 +2,10 @@
 
 Shape::Shape() {}
 
+glm::vec4 Shape::getColor() {
+	return Color;
+}
+
 void Shape::CreateVBO() {
 	glGenVertexArrays(1, &VaoId);
 	glGenBuffers(1, &VboId);

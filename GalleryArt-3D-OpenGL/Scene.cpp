@@ -27,23 +27,41 @@ void Scene::cleanup() {
 
 void Scene::setup() {
 
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // black background
+	glClearColor(1.0f, 1.0f, 1.0f, 0.0f); // black background
     loadShaders();
+	initShaderVariableLocations();
+}
+
+void Scene::initShaderVariableLocations() {
+
+	projectMatrixLoc = glGetUniformLocation(shadersId, "projectionMatrix");
+	viewMatrixLoc = glGetUniformLocation(shadersId, "viewMatrix");
+	objectColorLoc = glGetUniformLocation(shadersId, "objectColor");
+	lightColorLoc = glGetUniformLocation(shadersId, "lightColor");
+	lightPosLoc = glGetUniformLocation(shadersId, "lightPos");
+	viewPosLoc = glGetUniformLocation(shadersId, "viewPos");
+}
+
+void Scene::setShaderVariables(const glm::vec4& objectColor) {
+
+	glm::mat4 viewMatrix = glm::lookAt(EyePosition, ReferencePoint, glm::vec3(0.0f, 0.0f, 1.0f));
+	glUniformMatrix4fv(viewMatrixLoc, 1, GL_FALSE, &viewMatrix[0][0]);
+
+	glm::mat4 projectionMatrix = glm::perspective(45.0f, GLfloat(windowWidth) / GLfloat(windowHeight), 1.0f, 50.0f);
+	glUniformMatrix4fv(projectMatrixLoc, 1, GL_FALSE, &projectionMatrix[0][0]);
+
+	glUniform3f(objectColorLoc, objectColor[0], objectColor[1], objectColor[2]);
+	glUniform3f(lightColorLoc, 1.0f, 1.0f, 1.0f);
+	glUniform3f(lightPosLoc, 0.f, 0.f, 50.f);
+	glUniform3f(viewPosLoc, EyePosition[0], EyePosition[1], EyePosition[2]);
 }
 
 void Scene::render() {
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	glm::mat4 viewMatrix = glm::lookAt(EyePosition, ReferencePoint, glm::vec3(0.0f, 0.0f, -100.0f));
-	glUniformMatrix4fv(glGetUniformLocation(shadersId, "viewMatrix"), 1, GL_FALSE, &viewMatrix[0][0]);
-
-	glm::mat4 projectionMatrix = glm::perspective(45.0f, GLfloat(windowWidth) / GLfloat(windowHeight), 1.0f, 50.0f);
-	glUniformMatrix4fv(glGetUniformLocation(shadersId, "projectionMatrix"), 1, GL_FALSE, &projectionMatrix[0][0]);
-
-	glUniformMatrix4fv(glGetUniformLocation(shadersId, "normMatrix"), 1, GL_FALSE, &normMatrix[0][0]);
-
+	setShaderVariables(ground.getColor());
 	ground.Render();
-	cylinder.Render();
+	// cylinder.Render();
 
     glutSwapBuffers();
     glutPostRedisplay();

@@ -3,6 +3,7 @@
 #include <GL/glew.h>
 #include <GL/freeglut.h>
 #include <vector>
+#include "glmInclude.h"
 
 class Shape {
 
@@ -22,9 +23,15 @@ protected:
 	GLuint VboId;
 	GLuint EboId;
 
+	glm::vec4 Color;
+
 	Shape();
 
 	virtual void CreateVBO();
 	virtual void DestroyVBO();
 	virtual void Render() = 0;
+
+public:
+
+	glm::vec4 getColor();
 };

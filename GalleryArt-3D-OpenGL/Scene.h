@@ -10,10 +10,7 @@ class Scene {
 
 private:
 
-	Scene() {
-
-		normMatrix = glm::scale(glm::vec3(1.0f / windowWidth, 1.0f / windowHeight, 1.0f / windowHeight));
-	}
+	Scene() {}
 
 	Ground ground;
 	Cylinder cylinder;
@@ -26,14 +23,19 @@ private:
 	static const int windowWidth = 800;
 	static const int windowHeight = 600;
 
-	glm::mat4 normMatrix;
-	glm::vec3 EyePosition = glm::vec3(0.0f, -1.5f, -1.0f);
+	glm::vec3 EyePosition = glm::vec3(0.0f, -10.5f, 1.0f);
 	glm::vec3 ReferencePoint = glm::vec3(0.0f, 0.0f, 0.0f);
 
 	const char* vertexShaderPath = "Shader.vert";
 	const char* fragmentShaderPath = "Shader.frag";
 
 	GLuint shadersId;
+	GLuint objectColorLoc;
+	GLuint lightColorLoc;
+	GLuint lightPosLoc;
+	GLuint viewPosLoc;
+	GLuint viewMatrixLoc;
+	GLuint projectMatrixLoc;
 
 	void loadShaders();
 	void unloadShaders();
@@ -48,6 +50,8 @@ public:
 
 	void cleanup();
 	void render();
+	void initShaderVariableLocations();
+	void setShaderVariables(const glm::vec4&);
 
 	static Scene& getInstance();
 };

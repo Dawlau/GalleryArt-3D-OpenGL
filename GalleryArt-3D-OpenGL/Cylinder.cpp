@@ -19,7 +19,7 @@ Cylinder::Cylinder() {
 			float x_vf = radius * cosf(u);
 			float y_vf = radius * sinf(u);
 			float z_vf = height;
-			
+
 			index = merid * (NR_PARR + 1) + parr;
 			vertex_index = VertexSize * index;
 
@@ -29,10 +29,10 @@ Cylinder::Cylinder() {
 			vertex_index += 4;
 			Vertices[vertex_index] = x_vf; Vertices[vertex_index + 1] = y_vf; Vertices[vertex_index + 2] = -z_vf;
 			Indices[merid * (NR_PARR + 1) + parr] = merid * (NR_PARR + 1) + parr;
-			
+
 			index_aux = parr * (NR_MERID) + merid;
 			Indices[(NR_PARR + 1) * NR_MERID + index_aux] = index;
-			
+
 			if ((parr + 1) % (NR_PARR + 1) != 0)
 			{
 				int AUX = 2 * (NR_PARR + 1) * NR_MERID;
@@ -52,23 +52,6 @@ Cylinder::Cylinder() {
 			}
 		}
 	}
-
-	for (int i = 0; i < 2 * (NR_PARR + 1) * NR_MERID + 4 * (NR_PARR + 1) * NR_MERID; i++)
-	{
-		printf("%d, ", Indices[i]);
-	}
-	printf("\n");
-
-	for (int i = 0; i < (NR_PARR + 1) * NR_MERID; i++)
-	{
-		for (int j = 0; j < VertexSize; j++)
-		{
-			printf("%f, ", Vertices[VertexSize * i + j]);
-		}
-		printf("\n");
-	}
-	printf("\n");
-	
 }
 
 void Cylinder::Render() {
