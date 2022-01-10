@@ -9,7 +9,7 @@ class Ground : public Shape {
 
 private:
 
-	const int Size = 20; // size on screen
+	const int Size = 50; // size on screen
 
 public:
 

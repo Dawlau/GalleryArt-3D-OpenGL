@@ -7,7 +7,7 @@
 class Shape {
 
 protected:
-
+	static constexpr float PI = 3.141592f;
 	/*
 		4 - positions
 		4 - colors
@@ -16,9 +16,11 @@ protected:
 	static const int VertexSize = 11;
 
 	std::vector <float> Vertices;
+	std::vector <GLushort> Indices;
 
 	GLuint VaoId;
 	GLuint VboId;
+	GLuint EboId;
 
 	Shape();
 

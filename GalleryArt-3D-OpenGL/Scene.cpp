@@ -27,23 +27,23 @@ void Scene::cleanup() {
 
 void Scene::setup() {
 
-	glClearColor(1.0f, 1.0f, 1.0f, 0.0f); // white background
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // black background
     loadShaders();
 }
 
 void Scene::render() {
-
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	glm::mat4 viewMatrix = glm::lookAt(EyePosition, ReferencePoint, glm::vec3(0.0f, 1.0f, 0.0f));
+	glm::mat4 viewMatrix = glm::lookAt(EyePosition, ReferencePoint, glm::vec3(0.0f, 0.0f, -100.0f));
 	glUniformMatrix4fv(glGetUniformLocation(shadersId, "viewMatrix"), 1, GL_FALSE, &viewMatrix[0][0]);
 
-	glm::mat4 projectionMatrix = glm::perspective(45.0f, GLfloat(windowWidth) / GLfloat(windowHeight), 1.0f, 1800.0f);
+	glm::mat4 projectionMatrix = glm::perspective(45.0f, GLfloat(windowWidth) / GLfloat(windowHeight), 1.0f, 50.0f);
 	glUniformMatrix4fv(glGetUniformLocation(shadersId, "projectionMatrix"), 1, GL_FALSE, &projectionMatrix[0][0]);
 
 	glUniformMatrix4fv(glGetUniformLocation(shadersId, "normMatrix"), 1, GL_FALSE, &normMatrix[0][0]);
 
 	ground.Render();
+	cylinder.Render();
 
     glutSwapBuffers();
     glutPostRedisplay();

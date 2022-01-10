@@ -4,6 +4,7 @@
 #include <GL/freeglut.h>
 #include "glmInclude.h"
 #include "Ground.h"
+#include "Cylinder.h"
 
 class Scene {
 
@@ -11,12 +12,13 @@ private:
 
 	Scene() {
 
-		normMatrix = glm::scale(glm::vec3(2.0f / windowWidth, 2.0f / windowHeight, 1.0f)) * glm::translate(glm::vec3(-windowWidth / 2.0f, -windowHeight / 2.0f, 0.0f));
+		normMatrix = glm::scale(glm::vec3(1.0f / windowWidth, 1.0f / windowHeight, 1.0f / windowHeight));
 	}
 
 	Ground ground;
+	Cylinder cylinder;
 
-	static constexpr float PI = 3.14;
+	static constexpr float PI = 3.141592f;
 
 	static const int initialWindowsPosX = 100;
 	static const int initialWindowsPosY = 100;
@@ -25,14 +27,13 @@ private:
 	static const int windowHeight = 600;
 
 	glm::mat4 normMatrix;
-	glm::vec3 EyePosition = glm::vec3(0.0f, 0.0f, -800.0f);
+	glm::vec3 EyePosition = glm::vec3(0.0f, -1.5f, -1.0f);
 	glm::vec3 ReferencePoint = glm::vec3(0.0f, 0.0f, 0.0f);
 
 	const char* vertexShaderPath = "Shader.vert";
 	const char* fragmentShaderPath = "Shader.frag";
 
 	GLuint shadersId;
-	GLuint normLocation;
 
 	void loadShaders();
 	void unloadShaders();
