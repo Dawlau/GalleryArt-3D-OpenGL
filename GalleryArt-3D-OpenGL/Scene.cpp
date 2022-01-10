@@ -60,8 +60,8 @@ void Scene::render() {
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	setShaderVariables(ground.getColor());
-	ground.Render();
-	// cylinder.Render();
+	//ground.Render();
+	cylinder.Render();
 
     glutSwapBuffers();
     glutPostRedisplay();
