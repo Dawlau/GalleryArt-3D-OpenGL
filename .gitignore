@@ -301,7 +301,7 @@ node_modules/
 *.dsw
 *.dsp
 
-# Visual Studio 6 technical files 
+# Visual Studio 6 technical files
 *.ncb
 *.aps
 
@@ -401,3 +401,6 @@ FodyWeavers.xsd
 GalleryArt-3D-OpenGL/GalleryArt-3D-OpenGL.vcxproj
 GalleryArt-3D-OpenGL/GalleryArt-3D-OpenGL.vcxproj.filters
 GalleryArt-3D-OpenGL/glm
+
+run.sh
+main
