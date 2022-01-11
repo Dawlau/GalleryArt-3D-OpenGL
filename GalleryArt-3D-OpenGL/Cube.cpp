@@ -29,13 +29,13 @@ Cube::Cube(const bool& hasShadow) : Shape(hasShadow) {
 void Cube::Render()
 {
 	CreateVBO();
-	glDrawElements(GL_QUADS, 24, GL_UNSIGNED_BYTE, 0);
+	glDrawElements(GL_QUADS, 4 * 6, GL_UNSIGNED_SHORT, (void*)(0));
 	if (!hasShadow) {
 		DestroyVBO();
 	}
 }
 
 void Cube::DrawShadow() {
-	glDrawElements(GL_QUADS, 24, GL_UNSIGNED_BYTE, 0);
+	glDrawElements(GL_QUADS, 4 * 6, GL_UNSIGNED_SHORT, (void*)(0));
 	DestroyVBO();
 }

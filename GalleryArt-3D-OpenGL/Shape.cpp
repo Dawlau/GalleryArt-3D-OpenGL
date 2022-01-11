@@ -19,8 +19,9 @@ void Shape::CreateVBO() {
 
 	glBindVertexArray(VaoId);
 	glBindBuffer(GL_ARRAY_BUFFER, VboId);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EboId);
 	glBufferData(GL_ARRAY_BUFFER, Vertices.size() * sizeof(float), Vertices.data(), GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EboId);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, Indices.size() * sizeof(int), Indices.data(), GL_STATIC_DRAW);
 
 	glEnableVertexAttribArray(0); // position
