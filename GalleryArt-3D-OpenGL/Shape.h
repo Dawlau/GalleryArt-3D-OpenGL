@@ -18,6 +18,7 @@ protected:
 
 	std::vector <float> Vertices;
 	std::vector <GLushort> Indices;
+	bool hasShadow;
 
 	GLuint VaoId;
 	GLuint VboId;
@@ -30,8 +31,10 @@ protected:
 	virtual void CreateVBO();
 	virtual void DestroyVBO();
 	virtual void Render() = 0;
+	virtual void DrawShadow() = 0;
 
 public:
 
 	glm::vec4 getColor();
+	bool getHasShadow();
 };

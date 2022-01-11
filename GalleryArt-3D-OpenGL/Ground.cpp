@@ -12,9 +12,11 @@ Ground::Ground() {
 	Color = glm::vec4(0.2f, 0.6f, 0.1f, 1.0f);
 }
 
-void Ground::Render() 
+void Ground::Render()
 {
 	CreateVBO();
 	glDrawArrays(GL_QUADS, 0, 4);
 	DestroyVBO();
 }
+
+void Ground::DrawShadow() {}

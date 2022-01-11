@@ -14,13 +14,19 @@ uniform mat4 viewMatrix;
 uniform mat4 projectionMatrix;
 uniform vec3 lightPos;
 uniform vec3 viewPos;
+uniform mat4 shadowMatrix;
+uniform int drawShadow;
 
 void main() {
 
-	gl_Position = projectionMatrix * viewMatrix * in_Position;
-
+    if (drawShadow == 0){
+        gl_Position = projectionMatrix * viewMatrix * in_Position;
+        Normal = vec3(projectionMatrix * viewMatrix * vec4(in_Normal, 0.0));
+        inLightPos = vec3(projectionMatrix * viewMatrix * vec4(lightPos, 1.0f));
+        inViewPos = vec3(projectionMatrix * viewMatrix * vec4(viewPos, 1.0f));
+    }
+    else {
+        gl_Position = projectionMatrix * viewMatrix * shadowMatrix * in_Position;
+    }
     FragPos = vec3(gl_Position);
-    Normal = vec3(projectionMatrix * viewMatrix * vec4(in_Normal, 0.0));
-    inLightPos = vec3(projectionMatrix * viewMatrix * vec4(lightPos, 1.0f));
-    inViewPos = vec3(projectionMatrix * viewMatrix * vec4(viewPos, 1.0f));
 }

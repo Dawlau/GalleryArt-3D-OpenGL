@@ -17,4 +17,5 @@ public:
 	// void CreateVBO() override;
 	// void DestroyVBO() override;
 	void Render() override;
+	void DrawShadow() override;
 };

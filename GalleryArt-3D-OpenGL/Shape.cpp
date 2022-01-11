@@ -1,9 +1,15 @@
 #include "Shape.h"
 
-Shape::Shape() {}
+Shape::Shape() {
+	hasShadow = false;
+}
 
 glm::vec4 Shape::getColor() {
 	return Color;
+}
+
+bool Shape::getHasShadow() {
+	return hasShadow;
 }
 
 void Shape::CreateVBO() {

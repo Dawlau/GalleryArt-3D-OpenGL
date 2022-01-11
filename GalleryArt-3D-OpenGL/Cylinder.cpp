@@ -25,9 +25,9 @@ Cylinder::Cylinder() {
 			vertex_index += 4;
 			Vertices[vertex_index] = color.r; Vertices[vertex_index + 1] = color.g; Vertices[vertex_index + 2] = color.b; Vertices[vertex_index + 3] = color.a;
 			vertex_index += 4;
-			Vertices[vertex_index] = x_vf; Vertices[vertex_index + 1] = y_vf; Vertices[vertex_index + 2] = -z_vf;
+			Vertices[vertex_index] = cosf(u); Vertices[vertex_index + 1] = sinf(u); Vertices[vertex_index + 2] = 0;
 			vertex_index += 3;
-			if (divY < NUM_DIV_Y) 
+			if (divY < NUM_DIV_Y)
 			{
 				int currentIndex = divY * NUM_DIV_X + divX;
 				int rightIndex = divY * NUM_DIV_X + (divX + 1) % NUM_DIV_X;
@@ -41,11 +41,20 @@ Cylinder::Cylinder() {
 			}
 		}
 	}
+
+	Color = glm::vec4(1.0f, 0.0f, 0.0f, 1.0f);
 }
 
 void Cylinder::Render() {
 
 	CreateVBO();
+	glDrawElements(GL_QUADS, 4 * NUM_DIV_X * NUM_DIV_Y, GL_UNSIGNED_SHORT, (void*)(0));
+	if (!hasShadow) {
+		DestroyVBO();
+	}
+}
+
+void Cylinder::DrawShadow() {
 	glDrawElements(GL_QUADS, 4 * NUM_DIV_X * NUM_DIV_Y, GL_UNSIGNED_SHORT, (void*)(0));
 	DestroyVBO();
 }
