@@ -14,7 +14,7 @@ class Scene {
 private:
 
 	Scene() {
-		float D = 0.0f;
+		float D = 0.01f;
 		shadowMatrix = glm::mat4(
 			 //LightPosition[2] + 0.5f, 0, -LightPosition[0], -0.5f * LightPosition[0],
 			 //0, LightPosition[2] + 0.5f, -LightPosition[1], -0.5f * LightPosition[1],
@@ -67,6 +67,8 @@ private:
 	GLuint projectMatrixLoc;
 	GLuint drawShadowLoc;
 	GLuint shadowMatrixLoc;
+	GLuint scaleMatrixLoc;
+	GLuint translationMatrixLoc;
 
 	float alpha = PI / 8;
 	float beta = 0.0f;
@@ -89,7 +91,7 @@ public:
 	void processNormalKeys(unsigned char, int, int);
 
 	void initShaderVariableLocations();
-	void setShaderVariables(const glm::vec4&);
+	void setShaderVariables(Shape*);
 	void setShadowShaderVariables();
 
 	void drawObject(Shape*);

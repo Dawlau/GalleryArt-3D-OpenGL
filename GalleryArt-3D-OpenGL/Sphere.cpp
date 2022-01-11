@@ -1,6 +1,6 @@
 #include "Sphere.h"
 
-Sphere::Sphere(const bool& hasShadow) : Shape(hasShadow) {
+Sphere::Sphere(const glm::vec3& scale, const glm::vec3& translation, const bool& hasShadow) : Shape(scale, translation, hasShadow) {
 	int last_index = NUM_DIV_X * (NUM_DIV_Y + 1);
 	Indices.resize(4 * NUM_DIV_X * NUM_DIV_Y);
 

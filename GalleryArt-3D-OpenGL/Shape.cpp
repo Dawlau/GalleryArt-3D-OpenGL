@@ -1,11 +1,21 @@
 #include "Shape.h"
 
-Shape::Shape(const bool& hasShadow) {
+Shape::Shape(const glm::vec3& scale, const glm::vec3& translation, const bool& hasShadow) {
 	this->hasShadow = hasShadow;
+	scaleMatrix = glm::scale(scale);
+	translationMatrix = glm::translate(translation);
 }
 
 glm::vec4 Shape::getColor() {
 	return Color;
+}
+
+glm::mat4 Shape::getScale() {
+	return scaleMatrix;
+}
+
+glm::mat4 Shape::getTranslation() {
+	return translationMatrix;
 }
 
 bool Shape::getHasShadow() {

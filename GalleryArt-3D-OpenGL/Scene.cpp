@@ -41,7 +41,8 @@ void Scene::initShaderVariableLocations() {
 	lightPosLoc = glGetUniformLocation(shadersId, "lightPos");
 	viewPosLoc = glGetUniformLocation(shadersId, "viewPos");
 	drawShadowLoc = glGetUniformLocation(shadersId, "drawShadow");
-	shadowMatrixLoc = glGetUniformLocation(shadersId, "shadowMatrix");
+	shadowMatrixLoc = glGetUniformLocation(shadersId, "shadowMatrix");scaleMatrixLoc = glGetUniformLocation(shadersId, "scaleMatrix");
+	translationMatrixLoc = glGetUniformLocation(shadersId, "translationMatrix");
 }
 
 void Scene::setShadowShaderVariables() {
@@ -51,13 +52,14 @@ void Scene::setShadowShaderVariables() {
   	glUniformMatrix4fv(shadowMatrixLoc, 1, GL_FALSE, &shadowMatrix[0][0]);
 }
 
-void Scene::setShaderVariables(const glm::vec4& objectColor) {
+void Scene::setShaderVariables(Shape* shape) {
 
 	// position variables
 	glUniformMatrix4fv(viewMatrixLoc, 1, GL_FALSE, &viewMatrix[0][0]);
 	glUniformMatrix4fv(projectMatrixLoc, 1, GL_FALSE, &projectionMatrix[0][0]);
 
 	// light variables
+	glm::vec3 objectColor = shape->getColor();
 	glUniform3f(objectColorLoc, objectColor[0], objectColor[1], objectColor[2]);
 	glUniform3f(lightColorLoc, LightColor[0], LightColor[1], LightColor[2]);
 	glUniform3f(lightPosLoc, LightPosition[0], LightPosition[1], LightPosition[2]);
@@ -65,29 +67,34 @@ void Scene::setShaderVariables(const glm::vec4& objectColor) {
 
 	int drawShadow = 0;
 	glUniform1i(drawShadowLoc, drawShadow);
+
+	glm::mat4 scaleMatrix = shape->getScale();
+	glUniformMatrix4fv(scaleMatrixLoc, 1, GL_FALSE, &scaleMatrix[0][0]);
+	glm::mat4 translationMatrix = shape->getTranslation();
+	glUniformMatrix4fv(translationMatrixLoc, 1, GL_FALSE, &translationMatrix[0][0]);
 }
 
 void Scene::drawObject(Shape* shape) {
 
-	setShaderVariables(shape->getColor());
-	shape->Render();
-	if (shape->getHasShadow()) {
-		setShadowShaderVariables();
-		shape->DrawShadow();
-	}
+	glEnable(GL_DEPTH_TEST);
+    setShaderVariables(shape);
+    shape->Render();
+    if (shape->getHasShadow()) {
+        setShadowShaderVariables();
+        shape->DrawShadow();
+    }
 }
 
 void Scene::render() {
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glEnable(GL_DEPTH_TEST);
-	glDepthFunc(GL_ALWAYS); 
 
 	EyePosition[0] = ReferencePoint[0] + dist * cos(alpha) * cos(beta);
    	EyePosition[1] = ReferencePoint[1] + dist * cos(alpha) * sin(beta);
    	EyePosition[2] = ReferencePoint[2] + dist * sin(alpha);
 
 	viewMatrix = glm::lookAt(EyePosition, ReferencePoint, glm::vec3(0.0f, 0.0f, 1.0f));
-	projectionMatrix = glm::perspective(45.0f, GLfloat(windowWidth) / GLfloat(windowHeight), 1.0f, 50.0f);
+	projectionMatrix = glm::perspective(45.0f, GLfloat(windowWidth) / GLfloat(windowHeight), 5.0f, 50.0f);
 
 	drawObject(&ground);
 	drawObject(&cylinder);
@@ -131,7 +138,7 @@ void Scene::render() {
 void Scene::run(int argc, char** argv) {
 
 	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
+	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB | GLUT_DEPTH);
 	glutInitWindowPosition(initialWindowsPosX, initialWindowsPosY);
 	glutInitWindowSize(windowWidth, windowHeight);
 	glutCreateWindow("Art Gallery");

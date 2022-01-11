@@ -1,6 +1,6 @@
 #include "Cube.h"
 
-Cube::Cube(const bool& hasShadow) : Shape(hasShadow) {
+Cube::Cube(const glm::vec3& scale, const glm::vec3& translation, const bool& hasShadow) : Shape(scale, translation, hasShadow) {
 
 	Vertices = {
 		// vertices					 // colors                // normals

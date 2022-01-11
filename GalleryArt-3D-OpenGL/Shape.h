@@ -26,10 +26,10 @@ protected:
 
 	glm::vec4 Color;
 
-	float xScale, yScale, zScale;
-	float xTranslation, yTranslation, zTranslation;
+	glm::mat4 scaleMatrix;
+	glm::mat4 translationMatrix;
 
-	Shape(const bool& = true);
+	Shape(const glm::vec3& = glm::vec3(1.0f, 1.0f, 1.0f), const glm::vec3& = glm::vec3(0.0f, 0.0f, 0.0f), const bool& = true);
 
 	virtual void CreateVBO();
 	virtual void DestroyVBO();
@@ -41,4 +41,7 @@ public:
 
 	glm::vec4 getColor();
 	bool getHasShadow();
+
+	glm::mat4 getScale();
+	glm::mat4 getTranslation();
 };
