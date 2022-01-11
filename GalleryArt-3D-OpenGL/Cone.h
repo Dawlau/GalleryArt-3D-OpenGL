@@ -5,7 +5,7 @@
 #include <GL/freeglut.h>
 #include "glmInclude.h"
 
-class Cylinder : public Shape {
+class Cone : public Shape {
 
 private:
 	float radius = 1, height = 4;
@@ -16,7 +16,7 @@ private:
 
 public:
 
-	Cylinder();
+	Cone();
 	// void CreateVBO() override;
 	// void DestroyVBO() override;
 	void Render() override;

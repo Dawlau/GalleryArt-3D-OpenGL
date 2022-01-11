@@ -5,6 +5,9 @@
 #include "glmInclude.h"
 #include "Ground.h"
 #include "Cylinder.h"
+#include "Cone.h"
+#include "Cube.h"
+#include "Sphere.h"
 
 class Scene {
 
@@ -12,10 +15,10 @@ private:
 
 	Scene() {
 		shadowMatrix = glm::mat4(
-			// LightPosition[2] + 0.5f, 0, -LightPosition[0], -0.5f * LightPosition[0],
-			// 0, LightPosition[2] + 0.5f, -LightPosition[1], -0.5f * LightPosition[1],
-			// 0, 0, 0.5f, -0.5f * LightPosition[2],
-			// 0, 0, -1, LightPosition[2]
+			 //LightPosition[2] + 0.5f, 0, -LightPosition[0], -0.5f * LightPosition[0],
+			 //0, LightPosition[2] + 0.5f, -LightPosition[1], -0.5f * LightPosition[1],
+			 //0, 0, 0.5f, -0.5f * LightPosition[2],
+			 //0, 0, -1, LightPosition[2]
 			LightPosition[2], 0, -LightPosition[0], 0,
 			0, LightPosition[2] + 0.5f, -LightPosition[1], 0,
 			0, 0, 0, 0,
@@ -25,6 +28,9 @@ private:
 
 	Ground ground;
 	Cylinder cylinder;
+	Cone cone;
+	Sphere sphere;
+	Cube cube;
 
 	static constexpr float PI = 3.141592f;
 
@@ -34,7 +40,7 @@ private:
 	static const int windowWidth = 800;
 	static const int windowHeight = 600;
 
-	const glm::vec3 LightPosition = glm::vec3(-20.0f, 0.0f, 50.0f);
+	const glm::vec3 LightPosition = glm::vec3(0.0f, -5.0f, 10.0f);
 	const glm::vec3 LightColor = glm::vec3(1.0f, 1.0f, 1.0f);
 
 	glm::vec3 EyePosition = glm::vec3(0.0f, -10.5f, 1.0f);
@@ -75,6 +81,7 @@ public:
 	void cleanup();
 	void render();
 	void processSpecialKeys(int, int, int);
+	void processNormalKeys(unsigned char, int, int);
 
 	void initShaderVariableLocations();
 	void setShaderVariables(const glm::vec4&);
@@ -86,3 +93,4 @@ public:
 void renderWrapper();
 void cleanupWrapper();
 void processSpecialKeysWrapper(int, int, int);
+void processNormalKeysWrapper(unsigned char, int, int);

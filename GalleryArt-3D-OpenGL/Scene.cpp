@@ -69,7 +69,8 @@ void Scene::setShaderVariables(const glm::vec4& objectColor) {
 }
 
 void Scene::render() {
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glEnable(GL_DEPTH_TEST);
 
 	EyePosition[0] = ReferencePoint[0] + dist * cos(alpha) * cos(beta);
    	EyePosition[1] = ReferencePoint[1] + dist * cos(alpha) * sin(beta);
@@ -81,12 +82,33 @@ void Scene::render() {
 	setShaderVariables(ground.getColor());
 	ground.Render();
 
-	setShaderVariables(cylinder.getColor());
+	setShaderVariables(cube.getColor());
+	cube.Render();
+	if (cube.getHasShadow()){
+		setShadowShaderVariables();
+		cube.DrawShadow();
+	}
+
+	/*setShaderVariables(cylinder.getColor());
 	cylinder.Render();
 	if (cylinder.getHasShadow()){
 		setShadowShaderVariables();
 		cylinder.DrawShadow();
-	}
+	}*/
+
+	/*setShaderVariables(sphere.getColor());
+	sphere.Render();
+	if (sphere.getHasShadow()) {
+		setShadowShaderVariables();
+		sphere.DrawShadow();
+	}*/
+
+	/*setShaderVariables(cone.getColor());
+	cone.Render();
+	if (cone.getHasShadow()) {
+		setShadowShaderVariables();
+		cone.DrawShadow();
+	}*/
 
     glutSwapBuffers();
     glutPostRedisplay();
@@ -105,6 +127,7 @@ void Scene::run(int argc, char** argv) {
 	setup();
 
 	glutDisplayFunc(renderWrapper);
+	glutKeyboardFunc(processNormalKeysWrapper);
 	glutSpecialFunc(processSpecialKeysWrapper);
 	glutCloseFunc(cleanupWrapper);
 
@@ -129,6 +152,20 @@ void Scene::processSpecialKeys(int key, int xx, int yy) {
 	}
 }
 
+void Scene::processNormalKeys(unsigned char key, int x, int y)
+{
+	switch (key) {
+	case '-':
+		dist -= 0.5;
+		break;
+	case '+':
+		dist += 0.5;
+		break;
+	}
+	if (key == 27)
+		exit(0);
+}
+
 void renderWrapper() {
 
 	Scene::getInstance().render();
@@ -142,4 +179,9 @@ void cleanupWrapper() {
 void processSpecialKeysWrapper(int key, int xx, int yy) {
 
 	Scene::getInstance().processSpecialKeys(key, xx, yy);
+}
+
+void processNormalKeysWrapper(unsigned char key, int xx, int yy) {
+
+	Scene::getInstance().processNormalKeys(key, xx, yy);
 }
