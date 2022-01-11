@@ -6,8 +6,8 @@ Cylinder::Cylinder() {
 
 	Vertices.resize(VertexSize * NUM_DIV_X * (NUM_DIV_Y + 1));
 
-
-	glm::highp_vec4 color = glm::highp_vec4(0.94f, 0.73f, 0.57f, 1.0f);
+	glm::highp_vec4 color = glm::highp_vec4(0.12f, 0.13f, 0.57f, 1.0f);
+	Color = glm::vec4(0.12f, 0.13f, 0.57f, 1.0f);
 
 	int vertex_index = 0, indice_index = 0;
 
@@ -46,6 +46,6 @@ Cylinder::Cylinder() {
 void Cylinder::Render() {
 
 	CreateVBO();
-	glDrawElements(GL_QUADS, NUM_DIV_X * NUM_DIV_Y, GL_UNSIGNED_SHORT, (GLvoid*)(&Indices));
+	glDrawElements(GL_QUADS, 4 * NUM_DIV_X * NUM_DIV_Y, GL_UNSIGNED_SHORT, (void*)(0));
 	DestroyVBO();
 }

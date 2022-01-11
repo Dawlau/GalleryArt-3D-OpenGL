@@ -8,9 +8,9 @@
 class Cylinder : public Shape {
 
 private:
-	float radius = 20, height = 500;
+	float radius = 1, height = 4;
 	const int Size = 50; // size on screen
-	float const U_MIN = 0, U_MAX = 2 * PI, V_MIN = 0, V_MAX = 10;
+	float const U_MIN = 0, U_MAX = 2 * PI, V_MIN = 0, V_MAX = 1;
 	int const NUM_DIV_X = 10, NUM_DIV_Y = 10;
 	float step_u = (U_MAX - U_MIN) / NUM_DIV_X, step_v = (V_MAX - V_MIN) / NUM_DIV_Y;
 

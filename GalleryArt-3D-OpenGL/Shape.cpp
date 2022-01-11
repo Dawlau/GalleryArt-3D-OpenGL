@@ -9,6 +9,7 @@ glm::vec4 Shape::getColor() {
 void Shape::CreateVBO() {
 	glGenVertexArrays(1, &VaoId);
 	glGenBuffers(1, &VboId);
+	glGenBuffers(1, &EboId);
 
 	glBindVertexArray(VaoId);
 	glBindBuffer(GL_ARRAY_BUFFER, VboId);
