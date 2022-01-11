@@ -13,7 +13,7 @@ private:
 
 public:
 
-	Ground();
+	Ground(const bool& = true);
 	// void CreateVBO() override;
 	// void DestroyVBO() override;
 	void Render() override;

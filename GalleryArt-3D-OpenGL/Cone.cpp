@@ -1,6 +1,6 @@
 #include "Cone.h"
 
-Cone::Cone() {
+Cone::Cone(const bool& hasShadow) : Shape(hasShadow) {
 	int last_index = NUM_DIV_X * (NUM_DIV_Y + 1);
 	Indices.resize(4 * NUM_DIV_X * NUM_DIV_Y);
 

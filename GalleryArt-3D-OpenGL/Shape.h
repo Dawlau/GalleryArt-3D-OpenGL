@@ -26,14 +26,18 @@ protected:
 
 	glm::vec4 Color;
 
-	Shape();
+	float xScale, yScale, zScale;
+	float xTranslation, yTranslation, zTranslation;
+
+	Shape(const bool& = true);
 
 	virtual void CreateVBO();
 	virtual void DestroyVBO();
-	virtual void Render() = 0;
-	virtual void DrawShadow() = 0;
 
 public:
+
+	virtual void Render() = 0;
+	virtual void DrawShadow() = 0;
 
 	glm::vec4 getColor();
 	bool getHasShadow();

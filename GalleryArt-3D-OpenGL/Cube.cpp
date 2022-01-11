@@ -1,6 +1,6 @@
 #include "Cube.h"
 
-Cube::Cube() {
+Cube::Cube(const bool& hasShadow) : Shape(hasShadow) {
 
 	Vertices = {
 		// vertices					 // colors                // normals

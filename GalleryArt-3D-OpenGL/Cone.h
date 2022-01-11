@@ -16,7 +16,7 @@ private:
 
 public:
 
-	Cone();
+	Cone(const bool& = true);
 	// void CreateVBO() override;
 	// void DestroyVBO() override;
 	void Render() override;

@@ -14,7 +14,7 @@ uniform int drawShadow;
 void main() {
 
   if (drawShadow == 0){
-    float ambientStrength = 0.5f;
+    float ambientStrength = 0.1f;
     vec3 ambient_light = ambientStrength * lightColor;
     vec3 ambient_term = ambient_light * objectColor;
 
@@ -24,8 +24,8 @@ void main() {
     vec3 diffuse_light = lightColor;
     vec3 diffuse_term = diff * diffuse_light * objectColor;
 
-    float specularStrength = 5.0f;
-    float shininess = 10.0f;
+    float specularStrength = 0.1f;
+    float shininess = 0.5f;
     vec3 viewDir = normalize(inViewPos - FragPos);
     vec3 reflectDir = normalize(reflect(-lightDir, norm));
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), shininess);

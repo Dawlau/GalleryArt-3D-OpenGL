@@ -14,15 +14,20 @@ class Scene {
 private:
 
 	Scene() {
+		float D = 0.0f;
 		shadowMatrix = glm::mat4(
 			 //LightPosition[2] + 0.5f, 0, -LightPosition[0], -0.5f * LightPosition[0],
 			 //0, LightPosition[2] + 0.5f, -LightPosition[1], -0.5f * LightPosition[1],
 			 //0, 0, 0.5f, -0.5f * LightPosition[2],
 			 //0, 0, -1, LightPosition[2]
-			LightPosition[2], 0, -LightPosition[0], 0,
-			0, LightPosition[2] + 0.5f, -LightPosition[1], 0,
-			0, 0, 0, 0,
-			0, 0, -1, LightPosition[2]
+			// LightPosition[2], 0, -LightPosition[0], 0,
+			// 0, LightPosition[2] + 0.5f, -LightPosition[1], 0,
+			// 0, 0, 0, 0,
+			// 0, 0, -1, LightPosition[2]
+			LightPosition[2] + D, 0, 0, 0,
+			0, LightPosition[2] + D, 0, 0,
+			-LightPosition[0], -LightPosition[1], D, -1,
+			-LightPosition[0] * D, -LightPosition[1] * D, LightPosition[2] * D, LightPosition[2]
 		);
 	}
 
@@ -40,7 +45,7 @@ private:
 	static const int windowWidth = 800;
 	static const int windowHeight = 600;
 
-	const glm::vec3 LightPosition = glm::vec3(0.0f, -5.0f, 10.0f);
+	const glm::vec3 LightPosition = glm::vec3(100.0f, -50.0f, 100.0f);
 	const glm::vec3 LightColor = glm::vec3(1.0f, 1.0f, 1.0f);
 
 	glm::vec3 EyePosition = glm::vec3(0.0f, -10.5f, 1.0f);
@@ -86,6 +91,8 @@ public:
 	void initShaderVariableLocations();
 	void setShaderVariables(const glm::vec4&);
 	void setShadowShaderVariables();
+
+	void drawObject(Shape*);
 
 	static Scene& getInstance();
 };

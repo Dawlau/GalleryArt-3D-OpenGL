@@ -1,7 +1,7 @@
 #include "Shape.h"
 
-Shape::Shape() {
-	hasShadow = false;
+Shape::Shape(const bool& hasShadow) {
+	this->hasShadow = hasShadow;
 }
 
 glm::vec4 Shape::getColor() {

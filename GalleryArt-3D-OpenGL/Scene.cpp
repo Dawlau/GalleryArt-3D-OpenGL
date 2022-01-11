@@ -49,7 +49,6 @@ void Scene::setShadowShaderVariables() {
 	int drawShadow = 1;
 	glUniform1i(drawShadowLoc, drawShadow);
   	glUniformMatrix4fv(shadowMatrixLoc, 1, GL_FALSE, &shadowMatrix[0][0]);
-  	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_BYTE, (void*)(6));
 }
 
 void Scene::setShaderVariables(const glm::vec4& objectColor) {
@@ -68,9 +67,20 @@ void Scene::setShaderVariables(const glm::vec4& objectColor) {
 	glUniform1i(drawShadowLoc, drawShadow);
 }
 
+void Scene::drawObject(Shape* shape) {
+
+	setShaderVariables(shape->getColor());
+	shape->Render();
+	if (shape->getHasShadow()) {
+		setShadowShaderVariables();
+		shape->DrawShadow();
+	}
+}
+
 void Scene::render() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_ALWAYS); 
 
 	EyePosition[0] = ReferencePoint[0] + dist * cos(alpha) * cos(beta);
    	EyePosition[1] = ReferencePoint[1] + dist * cos(alpha) * sin(beta);
@@ -79,36 +89,39 @@ void Scene::render() {
 	viewMatrix = glm::lookAt(EyePosition, ReferencePoint, glm::vec3(0.0f, 0.0f, 1.0f));
 	projectionMatrix = glm::perspective(45.0f, GLfloat(windowWidth) / GLfloat(windowHeight), 1.0f, 50.0f);
 
-	setShaderVariables(ground.getColor());
-	ground.Render();
+	drawObject(&ground);
+	drawObject(&cylinder);
 
-	setShaderVariables(cube.getColor());
-	cube.Render();
-	if (cube.getHasShadow()){
-		setShadowShaderVariables();
-		cube.DrawShadow();
-	}
+	// setShaderVariables(ground.getColor());
+	// ground.Render();
 
-	/*setShaderVariables(cylinder.getColor());
-	cylinder.Render();
-	if (cylinder.getHasShadow()){
-		setShadowShaderVariables();
-		cylinder.DrawShadow();
-	}*/
+	// setShaderVariables(cube.getColor());
+	// cube.Render();
+	// if (cube.getHasShadow()){
+	// 	setShadowShaderVariables();
+	// 	cube.DrawShadow();
+	// }
 
-	/*setShaderVariables(sphere.getColor());
-	sphere.Render();
-	if (sphere.getHasShadow()) {
-		setShadowShaderVariables();
-		sphere.DrawShadow();
-	}*/
+	// setShaderVariables(cylinder.getColor());
+	// cylinder.Render();
+	// if (cylinder.getHasShadow()){
+	// 	setShadowShaderVariables();
+	// 	cylinder.DrawShadow();
+	// }
 
-	/*setShaderVariables(cone.getColor());
-	cone.Render();
-	if (cone.getHasShadow()) {
-		setShadowShaderVariables();
-		cone.DrawShadow();
-	}*/
+	// setShaderVariables(sphere.getColor());
+	// sphere.Render();
+	// if (sphere.getHasShadow()) {
+	// 	setShadowShaderVariables();
+	// 	sphere.DrawShadow();
+	// }
+
+	// setShaderVariables(cone.getColor());
+	// cone.Render();
+	// if (cone.getHasShadow()) {
+		// setShadowShaderVariables();
+		// cone.DrawShadow();
+	// }
 
     glutSwapBuffers();
     glutPostRedisplay();
