@@ -1,13 +1,12 @@
 #include "Sphere.h"
 
-Sphere::Sphere(const glm::vec3& scale, const glm::vec3& translation, const bool& hasShadow) : Shape(scale, translation, hasShadow) {
+Sphere::Sphere(const glm::vec3& scale, const glm::vec3& translation, int NUM_DIV_X, int NUM_DIV_Y, const bool& hasShadow) : Shape(scale, translation, hasShadow), NUM_DIV_X(NUM_DIV_X), NUM_DIV_Y(NUM_DIV_Y) {
 	int last_index = NUM_DIV_X * (NUM_DIV_Y + 1);
 	Indices.resize(4 * NUM_DIV_X * NUM_DIV_Y);
 
 	Vertices.resize(VertexSize * NUM_DIV_X * (NUM_DIV_Y + 1));
 
 	glm::highp_vec4 color = glm::highp_vec4(0.12f, 0.13f, 0.57f, 1.0f);
-	Color = glm::vec4(0.12f, 0.13f, 0.57f, 1.0f);
 
 	int vertex_index = 0, indice_index = 0;
 
@@ -25,7 +24,7 @@ Sphere::Sphere(const glm::vec3& scale, const glm::vec3& translation, const bool&
 			vertex_index += 4;
 			Vertices[vertex_index] = color.r; Vertices[vertex_index + 1] = color.g; Vertices[vertex_index + 2] = color.b; Vertices[vertex_index + 3] = color.a;
 			vertex_index += 4;
-			Vertices[vertex_index] = cosf(u); Vertices[vertex_index + 1] = sinf(u); Vertices[vertex_index + 2] = 0;
+			Vertices[vertex_index] = x_vf; Vertices[vertex_index + 1] = y_vf; Vertices[vertex_index + 2] = z_vf;
 			vertex_index += 3;
 			if (divY < NUM_DIV_Y)
 			{

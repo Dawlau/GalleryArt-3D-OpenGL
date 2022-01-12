@@ -16,7 +16,7 @@ private:
 
 public:
 
-	Cylinder(const glm::vec3& = glm::vec3(1.0f, 1.0f, 1.0f), const glm::vec3& = glm::vec3(0.0f, 0.0f, 0.0f), const bool& = true);
+	Cylinder(const glm::vec3& = glm::vec3(1.0f, 1.0f, 1.0f), const glm::vec3& = glm::vec3(0.0f, 0.0f, 0.0f), int NUM_DIV_X = 20, int NUM_DIV_Y = 20, const bool& = true);
 	// void CreateVBO() override;
 	// void DestroyVBO() override;
 	void Render() override;

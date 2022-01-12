@@ -14,7 +14,7 @@ class Scene {
 private:
 
 	Scene() {
-		float D = 0.01f;
+		float D = 0.02f;
 		shadowMatrix = glm::mat4(
 			 //LightPosition[2] + 0.5f, 0, -LightPosition[0], -0.5f * LightPosition[0],
 			 //0, LightPosition[2] + 0.5f, -LightPosition[1], -0.5f * LightPosition[1],
@@ -30,8 +30,6 @@ private:
 			-LightPosition[0] * D, -LightPosition[1] * D, LightPosition[2] * D, LightPosition[2]
 		);
 	}
-
-	Ground ground;
 	Cylinder cylinder;
 	Cone cone;
 	Sphere sphere;
@@ -73,6 +71,7 @@ private:
 	float alpha = PI / 8;
 	float beta = 0.0f;
 	float dist = 10.0f;
+	glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f);
 
 	void loadShaders();
 	void unloadShaders();
@@ -93,6 +92,7 @@ public:
 	void initShaderVariableLocations();
 	void setShaderVariables(Shape*);
 	void setShadowShaderVariables();
+	void drawTree(const glm::vec3& scale, const glm::vec3& translation);
 
 	void drawObject(Shape*);
 

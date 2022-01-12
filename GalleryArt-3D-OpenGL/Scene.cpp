@@ -27,7 +27,7 @@ void Scene::cleanup() {
 
 void Scene::setup() {
 
-	glClearColor(1.0f, 1.0f, 1.0f, 0.0f); // black background
+	glClearColor(0.57f, 0.71f, 0.95f, 0.0f);
     loadShaders();
 	initShaderVariableLocations();
 }
@@ -74,6 +74,15 @@ void Scene::setShaderVariables(Shape* shape) {
 	glUniformMatrix4fv(translationMatrixLoc, 1, GL_FALSE, &translationMatrix[0][0]);
 }
 
+void Scene::drawTree(const glm::vec3& scale, const glm::vec3& translation) {
+	Cylinder stump(scale * glm::vec3(0.1f, 0.1f, 0.275f), scale * (translation + glm::vec3(0.0f, 0.0f, 0.0f)));
+	Sphere leaves(scale * glm::vec3(0.5f, 0.5f, 0.75f), scale * (translation + glm::vec3(0.0f, 0.0f, 1.75f)));
+	stump.setColor(glm::vec4(0.396f, 0.262f, 0.129f, 0.5f));
+	leaves.setColor(glm::vec4(0.1, 0.8f, 0.15f, 0.5f));
+	drawObject(&stump);
+	drawObject(&leaves);
+}
+
 void Scene::drawObject(Shape* shape) {
 
 	glEnable(GL_DEPTH_TEST);
@@ -93,42 +102,24 @@ void Scene::render() {
    	EyePosition[1] = ReferencePoint[1] + dist * cos(alpha) * sin(beta);
    	EyePosition[2] = ReferencePoint[2] + dist * sin(alpha);
 
-	viewMatrix = glm::lookAt(EyePosition, ReferencePoint, glm::vec3(0.0f, 0.0f, 1.0f));
-	projectionMatrix = glm::perspective(45.0f, GLfloat(windowWidth) / GLfloat(windowHeight), 5.0f, 50.0f);
+	viewMatrix = glm::lookAt(EyePosition + position, ReferencePoint + position, glm::vec3(0.0f, 0.0f, 1.0f));
+	projectionMatrix = glm::perspective(45.0f, GLfloat(windowWidth) / GLfloat(windowHeight), 0.1f, 50.0f);
 
+	Ground ground(glm::vec3(100.0f, 100.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f));
+	ground.setColor(glm::vec4(0.05f, 0.67f, 0.16f, 1.0f));
 	drawObject(&ground);
-	drawObject(&cylinder);
 
-	// setShaderVariables(ground.getColor());
-	// ground.Render();
+	Ground path(glm::vec3(100.0f, 0.25f, 0.0f), glm::vec3(0.0f, 0.0f, 0.01f));
+	path.setColor(glm::vec4(1.0f, 0.8f, 0.7f, 1.0f));
+	drawObject(&path);
 
-	// setShaderVariables(cube.getColor());
-	// cube.Render();
-	// if (cube.getHasShadow()){
-	// 	setShadowShaderVariables();
-	// 	cube.DrawShadow();
-	// }
+	Cone piramid(glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.0f, 0.0f, 2.0f), 4, 2);
+	piramid.setColor(glm::vec4(0.05f, 0.67f, 0.16f, 1.0f));
+	drawObject(&piramid);
 
-	// setShaderVariables(cylinder.getColor());
-	// cylinder.Render();
-	// if (cylinder.getHasShadow()){
-	// 	setShadowShaderVariables();
-	// 	cylinder.DrawShadow();
-	// }
-
-	// setShaderVariables(sphere.getColor());
-	// sphere.Render();
-	// if (sphere.getHasShadow()) {
-	// 	setShadowShaderVariables();
-	// 	sphere.DrawShadow();
-	// }
-
-	// setShaderVariables(cone.getColor());
-	// cone.Render();
-	// if (cone.getHasShadow()) {
-		// setShadowShaderVariables();
-		// cone.DrawShadow();
-	// }
+	drawTree(glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(3.0f, 4.0f, 0.0f));
+	drawTree(glm::vec3(3.0f, 1.0f, 0.5f), glm::vec3(1.0f, 3.0f, 0.0f));
+	drawTree(glm::vec3(1.0f, 2.0f, 3.0f), glm::vec3(-1.0f, -1.0f, 0.0f));
 
     glutSwapBuffers();
     glutPostRedisplay();
@@ -181,9 +172,27 @@ void Scene::processNormalKeys(unsigned char key, int x, int y)
 	case '+':
 		dist += 0.5;
 		break;
-	}
+	case 'a':
+		position.y -= 0.25;
+		break;
+	case 'd':
+		position.y += 0.25;
+		break;
+	case 'w':
+		position.x -= 0.25;
+		break;
+	case 's':
+		position.x += 0.25;
+		break;
+	case 'q':
+		position.z -= 0.25;
+		break;
+	case 'e':
+		position.z += 0.25;
+		break;
 	if (key == 27)
 		exit(0);
+	}
 }
 
 void renderWrapper() {

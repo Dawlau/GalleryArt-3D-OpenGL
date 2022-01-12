@@ -10,6 +10,15 @@ glm::vec4 Shape::getColor() {
 	return Color;
 }
 
+void Shape::setColor(glm::vec4 newColor) {
+	int n = int(Vertices.size() / VertexSize);
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < 4; j++) {
+			Vertices[i * VertexSize + 4 + j] = newColor[j];
+		}
+	}
+}
+
 glm::mat4 Shape::getScale() {
 	return scaleMatrix;
 }
@@ -32,7 +41,7 @@ void Shape::CreateVBO() {
 	glBufferData(GL_ARRAY_BUFFER, Vertices.size() * sizeof(float), Vertices.data(), GL_STATIC_DRAW);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EboId);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, Indices.size() * sizeof(int), Indices.data(), GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, Indices.size() * sizeof(GLushort), Indices.data(), GL_STATIC_DRAW);
 
 	glEnableVertexAttribArray(0); // position
 	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, VertexSize * sizeof(GLfloat), (GLvoid*)0);

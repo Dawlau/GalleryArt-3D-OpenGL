@@ -8,8 +8,6 @@ Ground::Ground(const glm::vec3& scale, const glm::vec3& translation, const bool&
 		5.0f, 5.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
 		-5.0f, 5.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
 	};
-
-	Color = glm::vec4(0.2f, 0.6f, 0.1f, 1.0f);
 }
 
 void Ground::Render()

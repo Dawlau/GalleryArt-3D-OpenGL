@@ -40,6 +40,7 @@ public:
 	virtual void DrawShadow() = 0;
 
 	glm::vec4 getColor();
+	void setColor(glm::vec4);
 	bool getHasShadow();
 
 	glm::mat4 getScale();
