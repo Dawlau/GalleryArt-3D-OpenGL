@@ -37,6 +37,9 @@ void main() {
     out_Color = vec4(result, ex_Color.a);
   }
   else {
-    out_Color = vec4(0.0f, 0.0f, 0.0f, 1.0f);
+    float alpha = 0.15;
+    float beta = 0.95;
+    vec4 shadowColor = vec4(0.0f, 0.0f, 0.0f, 1.0f);
+    out_Color = alpha * vec4(0.0f, 1.0f, 0.0f, 1.0f) + beta * shadowColor;
   }
 }

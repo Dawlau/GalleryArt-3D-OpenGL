@@ -12,6 +12,7 @@ glm::vec4 Shape::getColor() {
 
 void Shape::setColor(glm::vec4 newColor) {
 	int n = int(Vertices.size() / VertexSize);
+	Color = newColor;
 	for (int i = 0; i < n; i++) {
 		for (int j = 0; j < 4; j++) {
 			Vertices[i * VertexSize + 4 + j] = newColor[j];

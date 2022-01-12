@@ -9,6 +9,9 @@
 #include "Cube.h"
 #include "Sphere.h"
 
+float getRandom(const float&, const float&);
+bool getRandomBool();
+
 class Scene {
 
 private:
@@ -29,11 +32,30 @@ private:
 			-LightPosition[0], -LightPosition[1], D, -1,
 			-LightPosition[0] * D, -LightPosition[1] * D, LightPosition[2] * D, LightPosition[2]
 		);
+
+		treeTransformations.reserve(treesCount);
+		for(int i = 0; i < treesCount; i++) {
+			glm::vec3 scale = glm::vec3(getRandom(1.0f, 3.0f), getRandom(1.0f, 3.0f), getRandom(1.0f, 2.0f));
+			glm::vec3 translation;
+
+			bool side = getRandomBool();
+			if(side) { // right
+				translation = glm::vec3(getRandom(-20.0f, 20.0f), getRandom(2.0f, 20.0f), 0.0f);
+			}
+			else {
+				translation = glm::vec3(getRandom(-20.0f, 20.0f), getRandom(-20.0f, -2.0f), 0.0f);
+			}
+
+			treeTransformations.push_back({scale, translation});
+		}
 	}
 	Cylinder cylinder;
 	Cone cone;
 	Sphere sphere;
 	Cube cube;
+
+	const int treesCount = 500;
+	std::vector < std::pair <glm::vec3, glm::vec3> > treeTransformations;
 
 	static constexpr float PI = 3.141592f;
 

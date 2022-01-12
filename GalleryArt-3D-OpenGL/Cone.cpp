@@ -25,7 +25,7 @@ Cone::Cone(const glm::vec3& scale, const glm::vec3& translation, int NUM_DIV_X, 
 			vertex_index += 4;
 			Vertices[vertex_index] = color.r; Vertices[vertex_index + 1] = color.g; Vertices[vertex_index + 2] = color.b; Vertices[vertex_index + 3] = color.a;
 			vertex_index += 4;
-			Vertices[vertex_index] = x_vf; Vertices[vertex_index + 1] = y_vf; Vertices[vertex_index + 2] = z_vf;
+			Vertices[vertex_index] = v * cosf(u); Vertices[vertex_index + 1] = v * sinf(u); Vertices[vertex_index + 2] = -v;
 			vertex_index += 3;
 			if (divY < NUM_DIV_Y)
 			{

@@ -2,6 +2,7 @@
 #include "loadShaders.h"
 #include <iostream>
 #include <iomanip>
+#include <random>
 
 Scene& Scene::getInstance() {
 
@@ -113,13 +114,15 @@ void Scene::render() {
 	path.setColor(glm::vec4(1.0f, 0.8f, 0.7f, 1.0f));
 	drawObject(&path);
 
-	Cone piramid(glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.0f, 0.0f, 2.0f), 4, 2);
-	piramid.setColor(glm::vec4(0.05f, 0.67f, 0.16f, 1.0f));
-	drawObject(&piramid);
+	// drawObject(&cone);
 
-	drawTree(glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(3.0f, 4.0f, 0.0f));
-	drawTree(glm::vec3(3.0f, 1.0f, 0.5f), glm::vec3(1.0f, 3.0f, 0.0f));
-	drawTree(glm::vec3(1.0f, 2.0f, 3.0f), glm::vec3(-1.0f, -1.0f, 0.0f));
+	// drawTree(glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(3.0f, 4.0f, 0.0f));
+	// drawTree(glm::vec3(3.0f, 1.0f, 0.5f), glm::vec3(1.0f, 3.0f, 0.0f));
+	// drawTree(glm::vec3(1.0f, 2.0f, 3.0f), glm::vec3(-1.0f, -1.0f, 0.0f));
+
+	for(int i = 0; i < treeTransformations.size(); i++) {
+		drawTree(treeTransformations[i].first, treeTransformations[i].second);
+	}
 
     glutSwapBuffers();
     glutPostRedisplay();
@@ -213,4 +216,22 @@ void processSpecialKeysWrapper(int key, int xx, int yy) {
 void processNormalKeysWrapper(unsigned char key, int xx, int yy) {
 
 	Scene::getInstance().processNormalKeys(key, xx, yy);
+}
+
+float getRandom(const float& FLOAT_MIN, const float& FLOAT_MAX) {
+
+	std::random_device rd;
+    std::default_random_engine eng(rd());
+    std::uniform_real_distribution<> distr(FLOAT_MIN, FLOAT_MAX);
+
+	return distr(eng);
+}
+
+bool getRandomBool() {
+
+	std::random_device rd;
+    std::default_random_engine eng(rd());
+    std::uniform_int_distribution<> distr(0, 1);
+
+	return distr(eng);
 }
