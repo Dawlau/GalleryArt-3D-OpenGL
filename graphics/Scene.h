@@ -75,8 +75,8 @@ private:
 	glm::mat4 projectionMatrix;
 	glm::mat4 shadowMatrix;
 
-	const char* vertexShaderPath = "Shader.vert";
-	const char* fragmentShaderPath = "Shader.frag";
+	const char* vertexShaderPath = "graphics/Shader.vert";
+	const char* fragmentShaderPath = "graphics/Shader.frag";
 
 	GLuint shadersId;
 	GLuint objectColorLoc;
