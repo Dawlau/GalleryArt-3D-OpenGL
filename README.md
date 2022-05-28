@@ -10,7 +10,7 @@ This is an example of a scene that contains a lot of trees, using the framework 
 
 Of course the framework is not limited to only trees, you can create any 3D shapes and put them in a scene using it.
 
-## Pre-requisites
+## Prerequisites
 
 1. [GLUT](https://www.opengl.org/resources/libraries/glut/glut_downloads.php)
 2. [GLEW](http://glew.sourceforge.net/)
